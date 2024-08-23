@@ -28,7 +28,7 @@ window.addEventListener("scroll", debounce(() => {
 }, 2000));
 
 function checkpointArrival(e) {
-  const scrollY = document.documentElement.scrollTop;
+  const scrollY = window.scrollY;
   if (scrollY >= articleBottomLocation) {
     console.log("100% read!", articleBottomLocation);
   } else if (scrollY >= seventyfivepoint) {
