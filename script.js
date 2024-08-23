@@ -2,9 +2,11 @@ const articleDiv = document.querySelector('article');
 const articleLength = articleDiv.scrollHeight; //ex: 2000px. Not directly used.
 const articleTopLocation = articleDiv.offsetTop; //ex: 150px from the top.
 const articleBottomLocation = articleLength + articleTopLocation; //ex 2150px from the top.
-const twentyfivepoint = articleLength * 0.25 + articleTopLocation;
-const halfWayPoint = articleLength * 0.5 + articleTopLocation;
-const seventyfivepoint = articleLength * 0.75 + articleTopLocation;
+const twentyfivepoint = articleLength * 0.25 + articleTopLocation; //ex: 650px from top.
+const halfWayPoint = articleLength * 0.5 + articleTopLocation; //ex: 1150px from top.
+const seventyfivepoint = articleLength * 0.75 + articleTopLocation; //ex: 1800px from top.
+
+let scrollCheckPoint = new Event("checkpoint");
 
 // Define the debounce function (adopted from Underscore.js)
 const debounce = (func, wait, immediate) => {
@@ -21,6 +23,11 @@ const debounce = (func, wait, immediate) => {
 
 // Check scroll depth through article
 window.addEventListener("scroll", debounce(() => {
+  window.addEventListener("checkpoint", checkpointArrival);
+  window.dispatchEvent(scrollCheckPoint);
+}, 2000));
+
+function checkpointArrival(e) {
   const scrollY = document.documentElement.scrollTop;
   if (scrollY >= articleBottomLocation) {
     console.log("100% read!", articleBottomLocation);
@@ -33,4 +40,4 @@ window.addEventListener("scroll", debounce(() => {
   } else if (scrollY >= 0) {
     console.log("0% to 25% read!", articleTopLocation);
   }
-}, 2000));
+}
