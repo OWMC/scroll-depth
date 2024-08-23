@@ -1,7 +1,16 @@
 const postContentContainer = document.getElementById('post-content'); //Ggets the container div for the article.
-const articleDiv = postContentContainer.querySelectorAll('article')[0]; // Gets the first instance of an article element
-const articleLength = articleDiv.scrollHeight; //ex: 2000px. Not directly used.
+if (postContentContainer === null) {
+  console.log("The current page does not have the required container `div` with an ID of `post-content`. Ergo this script will not do much work.");
+  return;
+}
 
+const articleDiv = postContentContainer.querySelectorAll('article')[0]; // Gets the first instance of an article element
+if (articleDiv === null) {
+  console.log("The current page does not have the required container `article`. Ergo this script will not do much work.");
+  return;
+};
+
+const articleLength = articleDiv.scrollHeight; //ex: 2000px. Not directly used.
 const articleTopLocation = { message: "0% to 25% read!", location: articleDiv.offsetTop };
 const quarterWayPoint = { message: "25% to 50% read!", location: articleLength * 0.25 + articleTopLocation.location };
 const halfWayPoint = { message: "50% to 75% read!", location: articleLength * 0.5 + articleTopLocation.location };
@@ -21,10 +30,8 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
-
 // Check scroll depth through article and fire events at checkpoints
 let scrollCheckPoint = new Event("checkpoint");
-
 window.addEventListener("scroll", debounce(() => {
   window.addEventListener("checkpoint", checkpointArrival);
   window.dispatchEvent(scrollCheckPoint);
@@ -43,4 +50,4 @@ function checkpointArrival(e) {
   } else if (scrollY >= 0) { // Arguably we should use `articleTopLocation.location` instead of 0, but with 0 (the top of the window object) the message is still true. Or should we have (also?) the checkpoints run on page load as well as scroll? (TBC BY EMAIL FIRST)
     console.log(articleTopLocation.message, articleTopLocation.location);
   }
-}
+};
