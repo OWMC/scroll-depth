@@ -1,6 +1,5 @@
-const postContentContainer = document.getElementById('post-content'); // gets the container div for the article.
-const articleDiv = postContentContainer.querySelectorAll('article')[0]; // gets the first instance of an article element
-console.log("articleDiv: ", articleDiv);
+const postContentContainer = document.getElementById('post-content'); //Ggets the container div for the article.
+const articleDiv = postContentContainer.querySelectorAll('article')[0]; // Gets the first instance of an article element
 const articleLength = articleDiv.scrollHeight; //ex: 2000px. Not directly used.
 
 const articleTopLocation = { message: "0% to 25% read!", location: articleDiv.offsetTop };
@@ -8,8 +7,6 @@ const quarterWayPoint = { message: "25% to 50% read!", location: articleLength *
 const halfWayPoint = { message: "50% to 75% read!", location: articleLength * 0.5 + articleTopLocation.location };
 const threeQuarterWayPoint = { message: "75% to 100% read!", location: articleLength * 0.75 + articleTopLocation.location };
 const articleBottomLocation = { message: "100% read!", location: articleLength + articleTopLocation.location };
-
-let scrollCheckPoint = new Event("checkpoint");
 
 // Define the debounce function (adopted from Underscore.js)
 const debounce = (func, wait, immediate) => {
@@ -24,7 +21,10 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
+
 // Check scroll depth through article and fire events at checkpoints
+let scrollCheckPoint = new Event("checkpoint");
+
 window.addEventListener("scroll", debounce(() => {
   window.addEventListener("checkpoint", checkpointArrival);
   window.dispatchEvent(scrollCheckPoint);
