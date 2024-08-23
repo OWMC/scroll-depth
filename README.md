@@ -11,9 +11,9 @@ The script considers the scroll depth in relation to the `article` element. Not 
 
 Requires a page containing one `article` element, within a container `div` which has the ID `post-content` (as per the Metro article template). This `article` element should not have overflowing content (causing an extra scroll area within the window object).
 
-The events trigger on scroll, but theoretically a user could visit the page at an anchor point far down in the article. So for example the first checkpoint `articleTopLocation.location` event may not fire. For this reason I have added some extra logic which fires a checkpoint event immediately on page load (check this works with throttling).
+The events trigger on scroll, but theoretically a user could visit the page at an anchor point far down in the article. So for example the first checkpoint `articleTopLocation.location` event may not fire. For this reason I have added some extra logic which fires a checkpoint event immediately on page load (check this works with throttling)(TBC BY EMAIL FIRST).
 
-Equally in another scenario where the user begins scrolling quickly, some checkpoints can be skipped due to the long timeout. To cover this scenario, the wording of the messages for the checkpoints makes clear that a part of the article has been read, but doesn't assume that the user has cumulatively read everything if a later checkpoint fires without the first previous checkpoint events firing.
+Equally in another scenario where the user begins scrolling quickly, some checkpoints can be skipped due to the long timeout. To cover this scenario, the wording of the messages for the checkpoints makes clear that a part of the article has been read, but doesn't assume that the user has cumulatively read everything if a later checkpoint fires without the first previous checkpoint events firing. 
 
 I would like to know more context before taking on the job. For example, why are we tracking this behaviour? Users can behave in unexpected ways. Accounting for all those ways could expand the scope of this script a lot. But the reason for tracking the proposed behaviour may limit the scope, saving effort while still delivering the necessary value.
 

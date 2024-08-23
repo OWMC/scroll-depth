@@ -40,7 +40,7 @@ function checkpointArrival(e) {
     console.log(halfWayPoint.message, halfWayPoint.location);
   } else if (scrollY >= quarterWayPoint.location) {
     console.log(quarterWayPoint.message, quarterWayPoint.location);
-  } else if (scrollY >= 0) { // Arguably we should use `articleTopLocation.location` instead of 0, but with 0 (the top of the window object) the message is still true.
+  } else if (scrollY >= 0) { // Arguably we should use `articleTopLocation.location` instead of 0, but with 0 (the top of the window object) the message is still true. Or should we have (also?) the checkpoints run on page load as well as scroll? (TBC BY EMAIL FIRST)
     console.log(articleTopLocation.message, articleTopLocation.location);
   }
 }
