@@ -30,7 +30,7 @@ I would like to know more context before taking on the job. For example, why are
 
 ### Option 2
 
-1. Clone the repository: `git clone https://github.com/your-username/your-project.git`
+1. Clone the repository: `git clone https://github.com/OWMC/scroll-depth.git`
 2. Install and run a local webserver: `npm install serve` in the project directory, then `serve`
 
 (The repo contains an html index page with an `article` inside a `div` with an ID of `post-content`)
