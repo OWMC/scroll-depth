@@ -29,7 +29,7 @@ window.addEventListener("scroll", debounce(() => {
 }, 1500)); // Long timeout because we want to know that the user has actually read (or at least skimmed) the article (and to improve browser performance by minimising compute effort on scroll)
 
 function checkpointArrival(e) {
-  const scrollY = document.documentElement.scrollTop;
+  const scrollY = window.scrollY;
   if (scrollY >= articleBottomLocation.location) {
     console.log(articleBottomLocation.message, articleBottomLocation.location);
   } else if (scrollY >= threeQuarterWayPoint.location) {
