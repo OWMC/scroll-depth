@@ -2,11 +2,11 @@ const postContentContainer = document.getElementById('post-content'); //Ggets th
 if (postContentContainer === null) {
   console.log("The current page does not have the required container `div` with an ID of `post-content`. Ergo this script will not do much work.");
   return;
-}
+};
 
 const articleDiv = postContentContainer.querySelectorAll('article')[0]; // Gets the first instance of an article element
 if (articleDiv === null) {
-  console.log("The current page does not have the required container `article`. Ergo this script will not do much work.");
+  console.log("The current page does not have the required `article` element. Ergo this script will not do much work.");
   return;
 };
 
@@ -51,3 +51,4 @@ function checkpointArrival(e) {
     console.log(articleTopLocation.message, articleTopLocation.location);
   }
 };
+

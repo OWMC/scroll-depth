@@ -10,7 +10,7 @@ The script considers the scroll depth in relation to the `article` element. Not 
 ## Requirements and potential future refinements
 
 Requires a page containing one `article` element, within a container `div` which has the ID `post-content` (as per the Metro article template).
-This `article` element should not have overflowing content (causing an extra scroll area within the window object).
+This `article` element, or any of it's ancestors, should not have overflowing content (causing an extra scroll area within the window object).
 
 Note: the `article` element can have multiple instances (including nested) on the same page and remain semantic. As is the case with the Metro article. It may seem overkill to require the specific `article` element within a `div` with the ID `post-content` - the script works fine on the Metro page by merely getting the `article` element regardless of the containing `div` or it's ID - but if this script were to be used on a different page, perhaps with long `article` elements instantiated higher up in the DOM than the one contained within the `div` with the `post-content` ID. In this script I sought to insure that no other `article` element would ever trigger the script. Only one instance of an `article` element will trigger the script, and this is guaranteed in semantic markup due to the container's ID which will be unique on the page.
 
