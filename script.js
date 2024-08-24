@@ -1,13 +1,11 @@
 const postContentContainer = document.getElementById('post-content'); //Ggets the container div for the article.
 if (postContentContainer === null) {
   console.log("The current page does not have the required container `div` with an ID of `post-content`. Ergo this script will not do much work.");
-  return;
 };
 
 const articleDiv = postContentContainer.querySelectorAll('article')[0]; // Gets the first instance of an article element
 if (articleDiv === null) {
   console.log("The current page does not have the required `article` element. Ergo this script will not do much work.");
-  return;
 };
 
 const articleLength = articleDiv.scrollHeight; //ex: 2000px. Not directly used.
@@ -35,6 +33,7 @@ let scrollCheckPoint = new Event("checkpoint");
 window.addEventListener("scroll", debounce(() => {
   window.addEventListener("checkpoint", checkpointArrival);
   window.dispatchEvent(scrollCheckPoint);
+  console.log("dispatched: ", window.dispatchEvent(scrollCheckPoint));
 }, 1500));
 
 function checkpointArrival(e) {
