@@ -47,16 +47,16 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     function handleScroll() {
-        const scrollY = document.documentElement.scrollTop;
-        if (scrollY >= offsets.zeroPercentCheckpoint.location) {
+        const userScrollLocation = document.documentElement.scrollTop;
+        if (userScrollLocation >= offsets.zeroPercentCheckpoint.location) {
             dispatchScrollOffset(offsets.zeroPercentCheckpoint);
-        } else if (scrollY >= offsets.twentyFivePercentCheckpoint.location) {
+        } else if (userScrollLocation >= offsets.twentyFivePercentCheckpoint.location) {
             dispatchScrollOffset(twentyFivePercentCheckpoint);
-        } else if (scrollY >= offsets.fiftyPercentCheckpoint.location) {
+        } else if (userScrollLocation >= offsets.fiftyPercentCheckpoint.location) {
             dispatchScrollOffset(fiftyPercentCheckpoint);
-        } else if (scrollY >= offsets.seentyFivePercentCheckpoint.location) {
+        } else if (userScrollLocation >= offsets.seentyFivePercentCheckpoint.location) {
             dispatchScrollOffset(seentyFivePercentCheckpoint);
-        } else if (scrollY >= offsets.hundredPercentCheckpoint.location) {
+        } else if (userScrollLocation >= offsets.hundredPercentCheckpoint.location) {
             dispatchScrollOffset(hundredPercentCheckpoint);
         }
         // else if not even begun reading
