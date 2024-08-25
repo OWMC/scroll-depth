@@ -19,9 +19,9 @@ function getTheArticle() {
 const articleLength = getTheArticle().scrollHeight;
 
 const offsets = {
-  twentyFivePercentCheckpoint: { percentage: "25%", message: "25% to 50% read!", location: articleLength * 0.25 + getTheArticle().offsetTop },
-  fiftyPercentCheckpoint: { percentage: "50%", message: "50% to 75% read!", location: articleLength * 0.5 + getTheArticle().offsetTop },
-  hundredPercentCheckpoint: { percentage: "100%", message: "100% read!", location: articleLength + getTheArticle().offsetTop }
+  twentyFivePercentCheckpoint: { percentage: "25%", message: "Passed the 25% checkpoint of this article!", location: articleLength * 0.25 + getTheArticle().offsetTop },
+  fiftyPercentCheckpoint: { percentage: "50%", message: "Passed the 50% checkpoint of this article!", location: articleLength * 0.5 + getTheArticle().offsetTop },
+  hundredPercentCheckpoint: { percentage: "100%", message: "Passed the 100% checkpoint of this article!", location: articleLength + getTheArticle().offsetTop }
 };
 
 function offsetEvent(percentage) {
@@ -30,7 +30,7 @@ function offsetEvent(percentage) {
 
 function dispatchScrollOffset(offset) {
   window.dispatchEvent(offsetEvent(offset.percentage)); // <- this is really it
-  console.log(offset.message + " Past the " + offset.location + "px checkpoint."); // <- to let the user know
+  alert(offset.message + " (" + offset.location + "px )"); // <- to let the user know
   console.log("Dispatched: ", offsetEvent(offset.percentage).detail); // <- to show what was dispatched
 };
 

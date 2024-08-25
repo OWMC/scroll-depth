@@ -7,8 +7,6 @@ The debounce method has a default long timeout (1.5 seconds), because we want to
 
 The script considers the scroll depth in relation to the `article` element. Not the entirety of the window. As we are focused on how much of an article a user has seen and we are not interested in if the user has seen other things on the page (out of scope).
 
-I added a checkpoint for 0%, not required in the brief.
-
 ## Requirements
 
 Requires a page containing one `article` element, within a container `div` which has the ID `post-content` (as per the Metro article template).
@@ -22,7 +20,7 @@ The events trigger on scroll, but theoretically a user could visit the page at a
 
 Equally in another scenario where the user begins scrolling quickly, some checkpoints can be skipped due to the long timeout. To cover this scenario, the wording of the messages for the checkpoints makes clear that a checkpoint has been scrolled past, but doesn't assume that the user has cumulatively read everything. Alternatively in this scenario, we could log not just the latest checkpoint, but all of the checkpoints also passed prior. In this case I would change the architecture and use a `forEach` loop on the offsets object instead of using the `else if` series as I have
 
-I would like to know more context before taking on the job. For example, why exactly are we tracking this behaviour? What problem are we trying to solve? Users can behave in unexpected ways. Accounting for all those ways could expand the scope of this script. Having the reason for tracking the proposed behaviour may limit the scope, saving effort while still delivering the necessary value.
+I would like to know more context before taking on the job. For example, why exactly are we tracking this behaviour? What problem are we trying to solve? This could mean I would make small changes like adjusting the timeout value on the debounce. Or require significant design pattern changes or more. Users can behave in unexpected ways. Accounting for all those ways could expand the scope of this script. Having the reason for tracking the proposed behaviour may limit the scope, saving effort while still delivering the necessary value.
 
 ## Installation
 
