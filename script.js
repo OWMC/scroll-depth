@@ -50,10 +50,9 @@ function debounce(func, wait) {
   var timeout = null;
   return function() {
       var context = this;
-      var args = arguments;
       clearTimeout(timeout);
       timeout = setTimeout(function() {
-          func.apply(context, args);
+          func.apply(context, arguments);
       }, wait);
   };
 };
