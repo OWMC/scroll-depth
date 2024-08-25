@@ -1,53 +1,63 @@
-const postContentContainer = document.getElementById('post-content'); //Ggets the container div for the article.
-if (postContentContainer === null) {
-  console.log("The current page does not have the required container `div` with an ID of `post-content`. Ergo this script will not do much work.");
-  return;
-}
+// I would want to ensure the document has loaded first. Like this:
+// document.addEventListener("DOMContentLoaded", () => { code goes here });
+// But this wouldn't work if copying and pasting into the console for the Metro page as it would have already loaded.
 
-const articleDiv = postContentContainer.querySelectorAll('article')[0]; // Gets the first instance of an article element
-if (articleDiv === null) {
-  console.log("The current page does not have the required container `article`. Ergo this script will not do much work.");
-  return;
+function getTheArticle() {
+  const postContentContainer = document.getElementById('post-content');
+  if (postContentContainer === null) {
+      console.log("The current page does not have the required container `div` with an ID of `post-content`. Ergo this script will not do much work.", postContentContainer);
+      return;
+  }
+  const firstArticleElement = postContentContainer.querySelectorAll('article')[0];
+  if (firstArticleElement === null) {
+      console.log("The current page does not have the required `article` element. Ergo this script will not do much work.");
+      return;
+  }
+  return firstArticleElement;
 };
 
-const articleLength = articleDiv.scrollHeight; //ex: 2000px. Not directly used.
-const articleTopLocation = { message: "0% to 25% read!", location: articleDiv.offsetTop };
-const quarterWayPoint = { message: "25% to 50% read!", location: articleLength * 0.25 + articleTopLocation.location };
-const halfWayPoint = { message: "50% to 75% read!", location: articleLength * 0.5 + articleTopLocation.location };
-const threeQuarterWayPoint = { message: "75% to 100% read!", location: articleLength * 0.75 + articleTopLocation.location };
-const articleBottomLocation = { message: "100% read!", location: articleLength + articleTopLocation.location };
+const articleLength = getTheArticle().scrollHeight;
 
-// Define the debounce function (adopted from Underscore.js)
-const debounce = (func, wait, immediate) => {
-  var timeout;
-  return function () {
-    var context = this;
-    var args = arguments;
-    clearTimeout(timeout);
-    timeout = setTimeout(function () {
-      if (!immediate) func.apply(context, args);
-    }, wait);
+const offsets = {
+  twentyFivePercentCheckpoint: { percentage: "25%", message: "Passed the 25% checkpoint of this article!", location: articleLength * 0.25 + getTheArticle().offsetTop },
+  fiftyPercentCheckpoint: { percentage: "50%", message: "Passed the 50% checkpoint of this article!", location: articleLength * 0.5 + getTheArticle().offsetTop },
+  hundredPercentCheckpoint: { percentage: "100%", message: "Passed the 100% checkpoint of this article!", location: articleLength + getTheArticle().offsetTop }
+};
+
+function offsetEvent(percentage) {
+  return new CustomEvent("checkpoint", {detail: {percentage: percentage}});
+};
+
+function dispatchScrollOffset(offset) {
+  window.dispatchEvent(offsetEvent(offset.percentage)); // <- this is really it
+  alert(offset.message + " (" + offset.location + "px )"); // <- to let the user know
+  console.log("Dispatched: ", offsetEvent(offset.percentage).detail); // <- to show what was dispatched
+};
+
+function handleScroll() {
+  const userScrollLocation = document.documentElement.scrollTop;
+  if (userScrollLocation >= offsets.hundredPercentCheckpoint.location) {
+      dispatchScrollOffset(offsets.hundredPercentCheckpoint);
+  } else if (userScrollLocation >= offsets.fiftyPercentCheckpoint.location) {
+      dispatchScrollOffset(offsets.fiftyPercentCheckpoint);
+  } else if (userScrollLocation >= offsets.twentyFivePercentCheckpoint.location) {
+      dispatchScrollOffset(offsets.twentyFivePercentCheckpoint);
   };
 };
 
-// Check scroll depth through article and fire events at checkpoints
-let scrollCheckPoint = new Event("checkpoint");
-window.addEventListener("scroll", debounce(() => {
-  window.addEventListener("checkpoint", checkpointArrival);
-  window.dispatchEvent(scrollCheckPoint);
-}, 1500));
-
-function checkpointArrival(e) {
-  const scrollY = document.documentElement.scrollTop;
-  if (scrollY >= articleBottomLocation.location) {
-    console.log(articleBottomLocation.message, articleBottomLocation.location);
-  } else if (scrollY >= threeQuarterWayPoint.location) {
-    console.log(threeQuarterWayPoint.message, threeQuarterWayPoint.location);
-  } else if (scrollY >= halfWayPoint.location) {
-    console.log(halfWayPoint.message, halfWayPoint.location);
-  } else if (scrollY >= quarterWayPoint.location) {
-    console.log(quarterWayPoint.message, quarterWayPoint.location);
-  } else if (scrollY >= 0) { // Arguably we should use `articleTopLocation.location` instead of 0, but with 0 (the top of the window object) the message is still true. Or should we have (also?) the checkpoints run on page load as well as scroll? (TBC BY EMAIL FIRST)
-    console.log(articleTopLocation.message, articleTopLocation.location);
-  }
+// Debounce function (from Underscore.js)
+function debounce(func, wait) {
+  var timeout = null;
+  return function() {
+      var context = this;
+      clearTimeout(timeout);
+      timeout = setTimeout(function() {
+          func.apply(context, arguments);
+      }, wait);
+  };
 };
+
+// Check scroll depth through article and fire events at offsets
+window.addEventListener("scroll", debounce(() => {
+  handleScroll();
+}, 1500));
