@@ -16,6 +16,9 @@ function getTheArticle() {
   return firstArticleElement;
 };
 
+const articleLength = getTheArticle().scrollHeight;
+const articleLocation = getTheArticle().offsetTop;
+
 function offsetEvent(percentage) {
   return new CustomEvent("checkpoint", {detail: {percentageScrolled: percentage}});
 };
@@ -28,9 +31,6 @@ function dispatchScrollOffset(percentage) {
 function getLocation(percentage, elementLength, headerGap) {
   return elementLength * percentage / 100 + headerGap;
 };
-
-const articleLength = getTheArticle().scrollHeight;
-const articleLocation = getTheArticle().offsetTop;
 
 function handleScroll() {
   const userScrollLocation = document.documentElement.scrollTop;
