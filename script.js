@@ -16,27 +16,21 @@ function getTheArticle() {
   return firstArticleElement;
 };
 
-const articleLength = getTheArticle().scrollHeight;
-const articleLocation = getTheArticle().offsetTop;
-
-function getLocation(percentage, elementLength, headerGap) {
-  return elementLength * percentage / 100 + headerGap;
-};
-
-function getMessage(percentage) {
-  return `Passed the ${percentage}% checkpoint of this article!`;
-};
-
 function offsetEvent(percentage) {
   return new CustomEvent("checkpoint", {detail: {percentageScrolled: percentage}});
 };
 
 function dispatchScrollOffset(percentage) {
   window.dispatchEvent(offsetEvent(percentage)); // <- this is really it
-  alert(getMessage(percentage) + " (" + getLocation(percentage, articleLength, articleLocation) + "px)"); // <- to let the user know
   console.log("Dispatched: ", offsetEvent(percentage).detail); // <- to show what was dispatched
 };
 
+function getLocation(percentage, elementLength, headerGap) {
+  return elementLength * percentage / 100 + headerGap;
+};
+
+const articleLength = getTheArticle().scrollHeight;
+const articleLocation = getTheArticle().offsetTop;
 
 function handleScroll() {
   const userScrollLocation = document.documentElement.scrollTop;
