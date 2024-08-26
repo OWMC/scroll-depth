@@ -20,9 +20,7 @@ const articleLength = getTheArticle().scrollHeight;
 const articleLocation = getTheArticle().offsetTop;
 
 function getOffset(percentage, elementLength, headerGap) {
-  return {
-    checkpoint: { message: `Passed the ${percentage}% checkpoint of this article!`, location: elementLength * percentage / 100 + headerGap },
-  }
+  return { message: `Passed the ${percentage}% checkpoint of this article!`, location: elementLength * percentage / 100 + headerGap }
 };
 
 function offsetEvent(percentage) {
@@ -31,18 +29,18 @@ function offsetEvent(percentage) {
 
 function dispatchScrollOffset(offset) {
   window.dispatchEvent(offsetEvent(offset)); // <- this is really it
-  alert(getOffset(offset, articleLength, articleLocation).checkpoint.message + " (" + getOffset(offset, articleLength, articleLocation).checkpoint.location + "px )"); // <- to let the user know
+  alert(getOffset(offset, articleLength, articleLocation).message + " (" + getOffset(offset, articleLength, articleLocation).location + "px )"); // <- to let the user know
   console.log("Dispatched: ", offsetEvent(offset).detail); // <- to show what was dispatched
 };
 
 
 function handleScroll() {
   const userScrollLocation = document.documentElement.scrollTop;
-  if (userScrollLocation >= getOffset(100, articleLength, articleLocation).checkpoint.location) {
+  if (userScrollLocation >= getOffset(100, articleLength, articleLocation).location) {
       dispatchScrollOffset(100);
-  } else if (userScrollLocation >= getOffset(50, articleLength, articleLocation).checkpoint.location) {
+  } else if (userScrollLocation >= getOffset(50, articleLength, articleLocation).location) {
       dispatchScrollOffset(50);
-  } else if (userScrollLocation >= getOffset(25, articleLength, articleLocation).checkpoint.location) {
+  } else if (userScrollLocation >= getOffset(25, articleLength, articleLocation).location) {
       dispatchScrollOffset(25);
   };
 };
