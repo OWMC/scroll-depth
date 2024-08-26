@@ -19,28 +19,32 @@ function getTheArticle() {
 const articleLength = getTheArticle().scrollHeight;
 const articleLocation = getTheArticle().offsetTop;
 
-function getOffset(percentage, elementLength, headerGap) {
-  return { message: `Passed the ${percentage}% checkpoint of this article!`, location: elementLength * percentage / 100 + headerGap }
+function getLocation(percentage, elementLength, headerGap) {
+  return elementLength * percentage / 100 + headerGap;
+};
+
+function getMessage(percentage) {
+  return `Passed the ${percentage}% checkpoint of this article!`;
 };
 
 function offsetEvent(percentage) {
   return new CustomEvent("checkpoint", {detail: {percentageScrolled: percentage}});
 };
 
-function dispatchScrollOffset(offset) {
-  window.dispatchEvent(offsetEvent(offset)); // <- this is really it
-  alert(getOffset(offset, articleLength, articleLocation).message + " (" + getOffset(offset, articleLength, articleLocation).location + "px )"); // <- to let the user know
-  console.log("Dispatched: ", offsetEvent(offset).detail); // <- to show what was dispatched
+function dispatchScrollOffset(percentage) {
+  window.dispatchEvent(offsetEvent(percentage)); // <- this is really it
+  alert(getMessage(percentage) + " (" + getLocation(percentage, articleLength, articleLocation) + "px)"); // <- to let the user know
+  console.log("Dispatched: ", offsetEvent(percentage).detail); // <- to show what was dispatched
 };
 
 
 function handleScroll() {
   const userScrollLocation = document.documentElement.scrollTop;
-  if (userScrollLocation >= getOffset(100, articleLength, articleLocation).location) {
+  if (userScrollLocation >= getLocation(100, articleLength, articleLocation)) {
       dispatchScrollOffset(100);
-  } else if (userScrollLocation >= getOffset(50, articleLength, articleLocation).location) {
+  } else if (userScrollLocation >= getLocation(50, articleLength, articleLocation)) {
       dispatchScrollOffset(50);
-  } else if (userScrollLocation >= getOffset(25, articleLength, articleLocation).location) {
+  } else if (userScrollLocation >= getLocation(25, articleLength, articleLocation)) {
       dispatchScrollOffset(25);
   };
 };
