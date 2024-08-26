@@ -5,56 +5,55 @@
 function getTheArticle() {
   const postContentContainer = document.getElementById('post-content');
   if (postContentContainer === null) {
-      console.log("The current page does not have the required container `div` with an ID of `post-content`. Ergo this script will not do much work.", postContentContainer);
       return;
   }
   const firstArticleElement = postContentContainer.querySelectorAll('article')[0];
   if (firstArticleElement === null) {
-      console.log("The current page does not have the required `article` element. Ergo this script will not do much work.");
       return;
   }
   return firstArticleElement;
 };
 
-const articleLength = getTheArticle().scrollHeight;
-
-const offsets = {
-  twentyFivePercentCheckpoint: { percentage: "25%", message: "Passed the 25% checkpoint of this article!", location: articleLength * 0.25 + getTheArticle().offsetTop },
-  fiftyPercentCheckpoint: { percentage: "50%", message: "Passed the 50% checkpoint of this article!", location: articleLength * 0.5 + getTheArticle().offsetTop },
-  hundredPercentCheckpoint: { percentage: "100%", message: "Passed the 100% checkpoint of this article!", location: articleLength + getTheArticle().offsetTop }
-};
-
 function offsetEvent(percentage) {
-  return new CustomEvent("checkpoint", {detail: {percentage: percentage}});
+  return new CustomEvent("checkpoint", {detail: {percentageScrolled: percentage}});
 };
 
-function dispatchScrollOffset(offset) {
-  window.dispatchEvent(offsetEvent(offset.percentage)); // <- this is really it
-  alert(offset.message + " (" + offset.location + "px )"); // <- to let the user know
-  console.log("Dispatched: ", offsetEvent(offset.percentage).detail); // <- to show what was dispatched
+function dispatchScrollOffset(percentage) {
+  window.dispatchEvent(offsetEvent(percentage)); // <- this is really it
+  console.log("Dispatched: ", offsetEvent(percentage).detail); // <- to show what was dispatched
+};
+
+function getLocation(percentage, elementLength, headerGap) {
+  return elementLength * percentage / 100 + headerGap;
 };
 
 function handleScroll() {
-  const userScrollLocation = document.documentElement.scrollTop;
-  if (userScrollLocation >= offsets.hundredPercentCheckpoint.location) {
-      dispatchScrollOffset(offsets.hundredPercentCheckpoint);
-  } else if (userScrollLocation >= offsets.fiftyPercentCheckpoint.location) {
-      dispatchScrollOffset(offsets.fiftyPercentCheckpoint);
-  } else if (userScrollLocation >= offsets.twentyFivePercentCheckpoint.location) {
-      dispatchScrollOffset(offsets.twentyFivePercentCheckpoint);
+  if (getTheArticle() !== undefined) { 
+    const articleLength = getTheArticle().scrollHeight;
+    const articleLocation = getTheArticle().offsetTop;
+    const userScrollLocation = document.documentElement.scrollTop;
+    if (userScrollLocation >= getLocation(100, articleLength, articleLocation)) {
+        dispatchScrollOffset(100);
+    } else if (userScrollLocation >= getLocation(50, articleLength, articleLocation)) {
+        dispatchScrollOffset(50);
+    } else if (userScrollLocation >= getLocation(25, articleLength, articleLocation)) {
+        dispatchScrollOffset(25);
+    };
+  } else {
+    console.log("The current page does not have the required markup. See requirements: https://github.com/OWMC/scroll-depth/blob/master/README.md).");
   };
 };
 
 // Debounce function (from Underscore.js)
 function debounce(func, wait) {
-  var timeout = null;
-  return function() {
-      var context = this;
-      clearTimeout(timeout);
-      timeout = setTimeout(function() {
-          func.apply(context, arguments);
-      }, wait);
-  };
+    var timeout = null;
+    return function() {
+        var context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            func.apply(context, arguments);
+        }, wait);
+    };
 };
 
 // Check scroll depth through article and fire events at offsets
