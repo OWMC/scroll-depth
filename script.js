@@ -14,24 +14,23 @@ function getTheArticle() {
   return firstArticleElement;
 };
 
-if (getTheArticle() !== undefined) { 
-  const articleLength = getTheArticle().scrollHeight;
-  const articleLocation = getTheArticle().offsetTop;
+function offsetEvent(percentage) {
+  return new CustomEvent("checkpoint", {detail: {percentageScrolled: percentage}});
+};
 
-  function offsetEvent(percentage) {
-    return new CustomEvent("checkpoint", {detail: {percentageScrolled: percentage}});
-  };
+function dispatchScrollOffset(percentage) {
+  window.dispatchEvent(offsetEvent(percentage)); // <- this is really it
+  console.log("Dispatched: ", offsetEvent(percentage).detail); // <- to show what was dispatched
+};
 
-  function dispatchScrollOffset(percentage) {
-    window.dispatchEvent(offsetEvent(percentage)); // <- this is really it
-    console.log("Dispatched: ", offsetEvent(percentage).detail); // <- to show what was dispatched
-  };
+function getLocation(percentage, elementLength, headerGap) {
+  return elementLength * percentage / 100 + headerGap;
+};
 
-  function getLocation(percentage, elementLength, headerGap) {
-    return elementLength * percentage / 100 + headerGap;
-  };
-
-  function handleScroll() {
+function handleScroll() {
+  if (getTheArticle() !== undefined) { 
+    const articleLength = getTheArticle().scrollHeight;
+    const articleLocation = getTheArticle().offsetTop;
     const userScrollLocation = document.documentElement.scrollTop;
     if (userScrollLocation >= getLocation(100, articleLength, articleLocation)) {
         dispatchScrollOffset(100);
@@ -40,10 +39,13 @@ if (getTheArticle() !== undefined) {
     } else if (userScrollLocation >= getLocation(25, articleLength, articleLocation)) {
         dispatchScrollOffset(25);
     };
+  } else {
+    console.log("The current page does not have the required markup. See requirements: https://github.com/OWMC/scroll-depth/blob/master/README.md).");
   };
+};
 
-  // Debounce function (from Underscore.js)
-  function debounce(func, wait) {
+// Debounce function (from Underscore.js)
+function debounce(func, wait) {
     var timeout = null;
     return function() {
         var context = this;
@@ -52,12 +54,9 @@ if (getTheArticle() !== undefined) {
             func.apply(context, arguments);
         }, wait);
     };
-  };
+};
 
-  // Check scroll depth through article and fire events at offsets
-  window.addEventListener("scroll", debounce(() => {
-    handleScroll();
-  }, 1500));
-} else {
-  console.log("The current page does not have the required markup (see readme). Ergo this script will not do much apart from tell you this.");
-}
+// Check scroll depth through article and fire events at offsets
+window.addEventListener("scroll", debounce(() => {
+  handleScroll();
+}, 1500));
