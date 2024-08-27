@@ -4,7 +4,8 @@ const { getLocation, offsetEvent } = require("./scrollDepth");
 
 describe('getLocation function', () => {
   it('should return just the headerGap when checkpoint is 0%', () => {
-    expect(getLocation(0, 1000, 200)).toBe(200);
+    const headerGap = 200;
+    expect(getLocation(0, 1000, headerGap)).toBe(headerGap);
   });
   it('should return 2000 when checkpoint is 200%', () => {
     expect(getLocation(200, 1000, 0)).toBe(2000);
