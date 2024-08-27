@@ -60,3 +60,9 @@ function debounce(func, wait) {
 window.addEventListener("scroll", debounce(() => {
   handleScroll();
 }, 1500));
+
+// For Jest (not the browser)
+if(typeof process === 'object') {
+  console.log("Hi Node!");
+  module.exports = { getLocation, offsetEvent }
+}
