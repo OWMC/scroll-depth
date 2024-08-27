@@ -12,7 +12,11 @@ The script considers the scroll depth in relation to the `article` element. Not 
 Requires a page containing one `article` element, within a container `div` which has the ID `post-content` (as per the Metro article template).
 This `article` element, or any of it's ancestors, should not have overflowing content (causing an extra scroll area within the window object).
 
-Note: the `article` element can have multiple instances (including nested) on the same page and remain semantic. As is the case with the Metro article. It may seem overkill to require the specific `article` element within a `div` with the ID `post-content` - the script works fine on the Metro page by merely getting the `article` element regardless of the containing `div` or it's ID - but if this script were to be used on a different page, perhaps with long `article` elements instantiated higher up in the DOM than the one contained within the `div` with the `post-content` ID. In this script I sought to insure that no other `article` element would ever trigger the script. Only one instance of an `article` element will trigger the script, and this is guaranteed in semantic markup due to the container's ID which will be unique on the page.
+**Note:** *The `article` element can have multiple instances (including nested) on the same page and remain semantic. As is the case with the Metro article. It may seem overkill to require the specific `article` element within a `div` with the ID `post-content` - the script works fine on the Metro page by merely getting the `article` element regardless of the containing `div` or it's ID - but if this script were to be used on a different page, perhaps with long `article` elements instantiated higher up in the DOM than the one contained within the `div` with the `post-content` ID. In this script I sought to insure that no other `article` element would ever trigger the script. Only one instance of an `article` element will trigger the script, and this is guaranteed in semantic markup due to the container's ID which will be unique on the page.*
+
+## Tests
+
+The repo includes a Jest test file. The testing requires Jest is installed, and the the Jest JSDOM testing environment is installed (jest-environment-jsdom).
 
 ## Potential future refinements
 
@@ -23,6 +27,8 @@ Equally in another scenario where the user begins scrolling quickly, some checkp
 I would like to know more context before taking on the job. For example, why exactly are we tracking this behaviour? What problem are we trying to solve? This could mean I would make small changes like adjusting the timeout value on the debounce. Or require significant design pattern changes or more. Users can behave in unexpected ways. Accounting for all those ways could expand the scope of this script. Having the reason for tracking the proposed behaviour may limit the scope, saving effort while still delivering the necessary value.
 
 ## Installation
+
+*To run tests insure Jest is installed globally and run `npm i` to install JSDOM test environment.*
 
 ### Option 1 (Metro article)
 

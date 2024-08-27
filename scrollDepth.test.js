@@ -9,8 +9,7 @@ describe('getLocation function', () => {
 });
 
 describe('getLocation function', () => {
-    it('should return 2 when checkpoint is 200%', () => {
-      expect(getLocation(200, 1000, 0)).toBe(2000);
-    });
+  it('should return 2000 when checkpoint is 200%', () => {
+    expect(getLocation(200, 1000, 0)).toBe(2000);
   });
-  
+});
