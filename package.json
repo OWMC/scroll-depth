@@ -1,0 +1,13 @@
+{
+  "name": "Scroll Depth",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "moduleFileExtensions": ["js","mjs","cjs","jsx","ts","tsx","json"]
+  },
+  "devDependencies": {
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}

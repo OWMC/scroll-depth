@@ -60,3 +60,5 @@ function debounce(func, wait) {
 window.addEventListener("scroll", debounce(() => {
   handleScroll();
 }, 1500));
+
+module.exports = getLocation;
