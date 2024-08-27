@@ -62,7 +62,7 @@ window.addEventListener("scroll", debounce(() => {
 }, 1500));
 
 // For Jest (not the browser)
-if(typeof process === 'object') {
+if(navigator.userAgent.includes("jsdom")) {
   console.log("This is only for Jest, not the browser.");
   module.exports = { getLocation, offsetEvent }
 }
