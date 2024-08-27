@@ -61,4 +61,4 @@ window.addEventListener("scroll", debounce(() => {
   handleScroll();
 }, 1500));
 
-module.exports = getLocation;
+module.exports = { getLocation, offsetEvent };
