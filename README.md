@@ -26,7 +26,7 @@ I would like to know more context before taking on the job. For example, why exa
 
 ### Option 1 (Metro article)
 
-1. Copy all of the script file from: `https://github.com/OWMC/scroll-depth/blob/master/script.js`
+1. Copy all of the script file from: `https://github.com/OWMC/scroll-depth/blob/master/scrollDepth.js`
 2. Open [this Metro article](https://metro.co.uk/2024/08/10/pointless-london-gallery-crowned-uks-biggest-tourist-let-down-21393090/) in a browser and open the console in developer tools
 3. Paste the script into the console and hit enter.
 

@@ -63,6 +63,6 @@ window.addEventListener("scroll", debounce(() => {
 
 // For Jest (not the browser)
 if(typeof process === 'object') {
-  console.log("Hi Node!");
+  console.log("This is only for Jest, not the browser.");
   module.exports = { getLocation, offsetEvent }
 }
